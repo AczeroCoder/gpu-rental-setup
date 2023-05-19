@@ -19,7 +19,7 @@ if response.status_code == 200:
         f.write(api_key)
 
     # Download the daemon
-    subprocess.run(["wget", "https://github.com/AczeroCoder/gpu-rental-setup/blob/main/daemon.pyy"])
+    subprocess.run(["wget", "https://github.com/AczeroCoder/gpu-rental-setup/blob/main/daemon.py"])
 
     # Make the daemon file executable
     subprocess.run(["chmod", "+x", "daemon.py"])
