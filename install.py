@@ -3,6 +3,10 @@ import getpass
 import os
 import subprocess
 
+def get_machine_id():
+    with open('/etc/machine-id') as f:
+        return f.read().strip()
+
 api_key = getpass.getpass('Please enter your API key: ')
 gpu_details = {}  # Assuming this is the format you want
 gpu_details['gpu_model'] = input('Enter your GPU Model: ')
