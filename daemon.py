@@ -8,7 +8,7 @@ with open('~/.myapp/api_key_file', 'r') as f:
     api_key = f.read().strip()
 
 # Ping the server
-response = requests.get('http://<your_backend_endpoint>/daemon_check', headers={'X-Api-Key': api_key})
+response = requests.get('https://3f07-2a02-c7e-2818-f900-5076-55ee-5fc7-a963.ngrok-free.app/daemon_check', headers={'X-Api-Key': api_key})
 
 # If the response contains instructions
 if response.status_code == 200:
