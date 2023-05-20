@@ -24,7 +24,7 @@ if response1.status_code == 200:
         print('GPU details submitted successfully.')
 
         # Download the daemon
-        subprocess.run(["wget", "https://github.com/AczeroCoder/gpu-rental-setup/blob/main/daemon.py"])
+        subprocess.run(["wget", "https://raw.githubusercontent.com/AczeroCoder/gpu-rental-setup/main/daemon.py"])
 
         # Make the daemon file executable
         subprocess.run(["chmod", "+x", "daemon.py"])
