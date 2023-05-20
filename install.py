@@ -10,7 +10,7 @@ gpu_details['vram'] = input('Enter your VRAM: ')
 gpu_details['rent_price'] = input('Enter the rent price: ')
 
 # Send the details to your server
-response = requests.post('http://<your_backend_endpoint>/add_gpu', headers={'X-Api-Key': api_key}, json=gpu_details)
+response = requests.post('https://3f07-2a02-c7e-2818-f900-5076-55ee-5fc7-a963.ngrok-free.app/add_gpu', headers={'X-Api-Key': api_key}, json=gpu_details)
 
 if response.status_code == 200:
     print('GPU details submitted successfully.')
