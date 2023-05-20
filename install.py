@@ -12,8 +12,7 @@ getUID = get_machine_id()
 response1 = requests.post('https://3f07-2a02-c7e-2818-f900-5076-55ee-5fc7-a963.ngrok-free.app/get_api_key', headers={'getKey': getUID})
 
 if response1.status_code == 200:
-    print(response1.text)
-    api_key = response1.text
+    api_key = response1.json()['api_key']
     gpu_details = {}
     gpu_details['gpu_model'] = input('Enter your GPU Model: ')
     gpu_details['vram'] = input('Enter your VRAM: ')
