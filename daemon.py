@@ -23,3 +23,5 @@ if response.status_code == 200:
         
         # Delete the temporary file after running the script
         os.remove("temp.py")
+    elif instructions['type'] == 'PING':
+        print("PINGGG")
