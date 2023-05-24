@@ -14,9 +14,10 @@ response1 = requests.post('https://3f07-2a02-c7e-2818-f900-5076-55ee-5fc7-a963.n
 if response1.status_code == 200:
     api_key = response1.json()['api_key']
     gpu_details = {}
-    gpu_details['gpu_model'] = input('Enter your GPU Model: ')
-    gpu_details['vram'] = input('Enter your VRAM: ')
-    gpu_details['rent_price'] = input('Enter the rent price: ')
+    print("Getting all key information such as GPU names, IDs, CPU, Motherboard, etc")
+    gpu_details['gpu_model'] = input('Do you wish to download (SOFTWARE): ')
+    # gpu_details['vram'] = input('Enter your VRAM: ')
+    # gpu_details['rent_price'] = input('Enter the rent price: ')
 
     response = requests.post('https://3f07-2a02-c7e-2818-f900-5076-55ee-5fc7-a963.ngrok-free.app/add_gpu', headers={'X-Api-Key': api_key}, json=gpu_details)
 
@@ -24,13 +25,15 @@ if response1.status_code == 200:
         print('GPU details submitted successfully.')
 
         # Download the daemon
-        subprocess.run(["wget", "https://raw.githubusercontent.com/AczeroCoder/gpu-rental-setup/main/daemon.py"])
+        if os.path.exists("gpureq.py"):
+            os.remove("gpureq.py")
+        subprocess.run(["wget", "https://raw.githubusercontent.com/AczeroCoder/gpu-rental-setup/main/gpureq.py"])
 
         # Make the daemon file executable
-        subprocess.run(["chmod", "+x", "daemon.py"])
+        subprocess.run(["chmod", "+x", "gpureq.py"])
 
         # Schedule the daemon to run every 30 seconds
-        crontab_line = "*/30 * * * * /usr/bin/python3 ~/.myapp/daemon.py"
+        crontab_line = "*/30 * * * * /usr/bin/python3 ~/.myapp/gpureq.py"
         with open("/etc/crontab", "a") as cron_file:
             cron_file.write(crontab_line)
 
