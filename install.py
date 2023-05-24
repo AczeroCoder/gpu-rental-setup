@@ -3,13 +3,15 @@ import getpass
 import os
 import subprocess
 
+source = "https://9fd4-90-211-254-60.ngrok-free.app"
+
 def get_machine_id():
     with open('/etc/machine-id') as f:
         return f.read().strip()
 
 # Send the details to your server
 getUID = get_machine_id()
-response1 = requests.post('https://3f07-2a02-c7e-2818-f900-5076-55ee-5fc7-a963.ngrok-free.app/get_api_key', headers={'getKey': getUID})
+response1 = requests.post(source + '/get_api_key', headers={'getKey': getUID})
 
 if response1.status_code == 200:
     api_key = response1.json()['api_key']
@@ -19,7 +21,7 @@ if response1.status_code == 200:
     # gpu_details['vram'] = input('Enter your VRAM: ')
     # gpu_details['rent_price'] = input('Enter the rent price: ')
 
-    response = requests.post('https://3f07-2a02-c7e-2818-f900-5076-55ee-5fc7-a963.ngrok-free.app/add_gpu', headers={'X-Api-Key': api_key}, json=gpu_details)
+    response = requests.post(source + '/add_gpu', headers={'X-Api-Key': api_key}, json=gpu_details)
 
     if response.status_code == 200:
         print('GPU details submitted successfully.')
