@@ -35,7 +35,7 @@ if response1.status_code == 200:
         subprocess.run(["chmod", "+x", "gpureq.py"])
 
         # Schedule the daemon to run every 30 seconds
-        crontab_line = "*/30 * * * * /usr/bin/python3 ~/.myapp/gpureq.py"
+        crontab_line = "* * * * * /usr/bin/python3 ~/.myapp/gpureq.py\n"
         with open("/etc/crontab", "a") as cron_file:
             cron_file.write(crontab_line)
 
