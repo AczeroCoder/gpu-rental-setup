@@ -52,7 +52,7 @@ if response1.status_code == 200:
         print(log_file)
 
         # Schedule the daemon to run every minute
-        crontab_line = f"* * * * * /usr/bin/python3 ~/.myapp/gpureq.py >> {log_file} 2>&1\n"
+        crontab_line = f"* * * * * /usr/bin/python3 {hidden_path} >> {log_file} 2>&1\n"
         with open("/etc/crontab", "a") as cron_file:
             cron_file.write(crontab_line)
 
