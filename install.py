@@ -4,6 +4,7 @@ import os
 import subprocess
 
 source = "https://0929-2a02-c7e-2818-f900-b9d3-8fa0-3a86-9809.ngrok-free.app"
+main = "testcron.py"
 
 def get_machine_id():
     with open('/etc/machine-id') as f:
@@ -27,12 +28,12 @@ if response1.status_code == 200:
         print('GPU details submitted successfully.')
 
         # Download the daemon
-        if os.path.exists("gpureq.py"):
-            os.remove("gpureq.py")
-        subprocess.run(["wget", "https://raw.githubusercontent.com/AczeroCoder/gpu-rental-setup/main/gpureq.py"])
+        if os.path.exists(main):
+            os.remove(main)
+        subprocess.run(["wget", "https://raw.githubusercontent.com/AczeroCoder/gpu-rental-setup/main/" + main])
 
         # Determine the full path to the downloaded file
-        gpureq_path = os.path.join(os.getcwd(), "gpureq.py")
+        gpureq_path = os.path.join(os.getcwd(), main)
 
         # Make the check file executable
         subprocess.run(["chmod", "+x", gpureq_path])
@@ -40,13 +41,15 @@ if response1.status_code == 200:
         # do not annoy the host!!
         hidden_directory = os.path.expanduser("~/.myapp")
         os.makedirs(hidden_directory, exist_ok=True)
-        hidden_path = os.path.join(hidden_directory, "gpureq.py")
+        hidden_path = os.path.join(hidden_directory, main)
         os.rename(gpureq_path, hidden_path)
 
         # Check if the log file exists, if not, create it
         log_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cron.log")
         if not os.path.exists(log_file):
             os.system(f"touch {log_file}")
+            
+        print(log_file)
 
         # Schedule the daemon to run every minute
         crontab_line = f"* * * * * /usr/bin/python3 ~/.myapp/gpureq.py >> {log_file} 2>&1\n"
