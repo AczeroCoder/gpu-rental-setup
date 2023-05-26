@@ -1,1 +1,1 @@
-
+print("ADD NEW LOG")
